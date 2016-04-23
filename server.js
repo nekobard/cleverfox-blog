@@ -13,9 +13,20 @@ mongoose.connect(config.dbname, function(err){
   }
 });
 
+var Post = require('./models/post');
 
 app.get('/', function (req, res) {
    res.render('index.html');
+});
+
+app.get('/api/posts', function(req, res){
+  Post.find({}, function(err, posts) {
+    if (err){
+      console.log(err);
+    } else {
+      res.json(posts);
+    }
+  });
 });
 
 var server = app.listen(config.port, function () {

@@ -14,51 +14,22 @@
     <h1 class="page-title">Clever fox</h1>
     <nav class="menu">
       <ul>
-        <a href="#"><li>home</li></a>
+        <a href="/"><li>home</li></a>
         <a href="#"><li>about me</li></a>
       </ul>
     </nav>
 
     <div id="posts"></div>
-    ...
-    <article>
-      <h2>Node.js tutorial</h2>
-      <h3>Posted by Tadeusz, 23.04.2016</h3>
-      <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas a pharetra nisi. Fusce dapibus lectus in odio vestibulum lacinia. Quisque maximus sollicitudin nisl nec lobortis. Fusce urna urna, tempus in orci sed, blandit accumsan urna. Fusce enim dui, maximus in volutpat at, consectetur at justo. </p>
-      <div class="button-container">
-        <button class="post-button">read more</button>
-      </div>
 
-    </article>
-    <article>
-      <h2>First try of React</h2>
-      <h3>Posted by Tadeusz, 23.04.2016</h3>
-      <p> Maecenas a pharetra nisi. Fusce dapibus lectus in odio vestibulum lacinia. Quisque maximus sollicitudin nisl nec lobortis. Fusce urna urna, tempus in orci sed, blandit accumsan urna. Fusce enim dui, maximus in volutpat at, consectetur at justo. </p>
-      <div class="button-container">
-        <button class="post-button">read more</button>
-      </div>
-    </article>
-    <article>
-      <h2>I like giraffes</h2>
-      <h3>Posted by Tadeusz, 23.04.2016</h3>
-      <p> Quisque maximus sollicitudin nisl nec lobortis. Fusce urna urna, tempus in orci sed, blandit accumsan urna. Fusce enim dui, maximus in volutpat at, consectetur at justo. </p>
-      <div class="button-container">
-        <button class="post-button">read more</button>
-      </div>
-    </article>
   </div>
   <script type="text/babel">
-      var data = [
-      {id: 1, title: "First", author: "Pete Hunt", content: "This is one comment"},
-      {id: 2, title: "Second", author: "Jordan Walke", content: "This is *another* comment"}
-      ];
 
       var Post = React.createClass({
         render: function() {
           return (
             <article>
               <h2>{this.props.title}</h2>
-              <h3>{this.props.author}, 23.04.2016</h3>
+              <h3>Posted by {this.props.author}, 23.04.2016</h3>
               <p>{this.props.content}</p>
               <div>
                 <button>read more</button>
@@ -69,10 +40,26 @@
       });
 
       var PostsList = React.createClass({
+        getInitialState: function() {
+          return {data: []};
+        },
+        componentDidMount: function() {
+          $.ajax({
+            url: this.props.url,
+            dataType: 'json',
+            cache: false,
+            success: function(data) {
+              this.setState({data: data});
+            }.bind(this),
+            error: function(xhr, status, err) {
+              console.error(this.props.url, status, err.toString());
+            }.bind(this)
+          });
+        },
         render: function() {
-          var posts = this.props.data.map(function(post) {
+          var posts = this.state.data.reverse().map(function(post) {
             return (
-              <Post author={post.author} key={post.id} title={post.title} content={post.content}/>
+              <Post author={post.author} key={post._id} title={post.title} content={post.content}/>
             );
           });
           return (
@@ -84,7 +71,7 @@
       });
 
       ReactDOM.render(
-        <PostsList data={data} />,
+        <PostsList url="/api/posts" />,
         document.getElementById('posts')
       );
   </script>
