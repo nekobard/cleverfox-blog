@@ -47,6 +47,46 @@
       </div>
     </article>
   </div>
+  <script type="text/babel">
+      var data = [
+      {id: 1, title: "First", author: "Pete Hunt", content: "This is one comment"},
+      {id: 2, title: "Second", author: "Jordan Walke", content: "This is *another* comment"}
+      ];
 
+      var Post = React.createClass({
+        render: function() {
+          return (
+            <article>
+              <h2>{this.props.title}</h2>
+              <h3>{this.props.author}, 23.04.2016</h3>
+              <p>{this.props.content}</p>
+              <div>
+                <button>read more</button>
+              </div>
+            </article>
+          );
+        }
+      });
+
+      var PostsList = React.createClass({
+        render: function() {
+          var posts = this.props.data.map(function(post) {
+            return (
+              <Post author={post.author} key={post.id} title={post.title} content={post.content}/>
+            );
+          });
+          return (
+            <div>
+              {posts}
+            </div>
+          );
+        }
+      });
+
+      ReactDOM.render(
+        <PostsList data={data} />,
+        document.getElementById('posts')
+      );
+  </script>
 </body>
 </html>

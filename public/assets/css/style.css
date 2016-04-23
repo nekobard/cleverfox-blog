@@ -67,12 +67,12 @@ article > h3{
   font-weight: normal;
 }
 
-.button-container{
+article > div{
   position: relative;
   height: 3rem;
 }
 
-.post-button{
+article > div > button{
   line-height: 1.5rem;
   font-size: 1rem;
   background: white;
@@ -85,7 +85,7 @@ article > h3{
   right: 0;
 }
 
-.post-button:hover{
+article > div > button:hover{
   background: rgb(152, 152, 152);
   cursor: pointer;
 }
