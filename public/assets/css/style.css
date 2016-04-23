@@ -1,0 +1,91 @@
+.menu > ul li{
+  display: inline-block;
+  list-style-type: none;
+  text-decoration: none;
+  color: rgb(201, 201, 201);
+  padding-right: 1.5rem;
+  font-size: 1.5rem;
+  line-height: 3rem;
+}
+
+.menu > ul li:hover{
+  color: rgb(177, 175, 175);
+}
+
+.menu > ul{
+  margin: 0;
+  padding: 0;
+  text-transform: uppercase;
+}
+
+.menu{
+  margin-bottom: 6rem;
+}
+
+.page-title{
+  color: #333;
+  font-size: 3rem;
+  font-family: sans-serif;
+  text-transform: uppercase;
+  line-height: 4.5rem;
+  margin-bottom: 0;
+}
+
+.container{
+  margin: 0 auto;
+  max-width: 36rem;
+  padding: 0 0.75rem;
+}
+
+article > h2{
+  font-family: sans-serif;
+  color: #333;
+  font-size: 1.5rem;
+  line-height: 3rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+article > p{
+  font-size: 1rem;
+  line-height: 1.5rem;
+  text-align: justify;
+  color: #333;
+}
+
+article{
+  margin-bottom: 1.5rem;
+}
+
+article > h3{
+  font-size: 1rem;
+  color: rgb(201, 201, 201);
+  font-family: sans-serif;
+  margin-top: 0;
+  line-height: 1.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: normal;
+}
+
+.button-container{
+  position: relative;
+  height: 3rem;
+}
+
+.post-button{
+  line-height: 1.5rem;
+  font-size: 1rem;
+  background: white;
+  padding: 0.5rem 1rem;
+  border: none;
+  color: white;
+  background: rgb(172, 172, 172);
+  border-radius: 10px;
+  position: absolute;
+  right: 0;
+}
+
+.post-button:hover{
+  background: rgb(152, 152, 152);
+  cursor: pointer;
+}
