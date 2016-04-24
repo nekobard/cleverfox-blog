@@ -27,6 +27,7 @@ app.get('/api/posts', function(req, res){
     if (err){
       console.log(err);
     } else {
+      console.log(posts);
       res.json(posts);
     }
   });

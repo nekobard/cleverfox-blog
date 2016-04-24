@@ -29,7 +29,7 @@
           return (
             <article>
               <h2>{this.props.title}</h2>
-              <h3>Posted by {this.props.author}, 23.04.2016</h3>
+              <h3>Posted by {this.props.author}, {this.date}</h3>
               <p>{this.props.content}</p>
               <div>
                 <button>read more</button>
@@ -59,7 +59,7 @@
         render: function() {
           var posts = this.state.data.reverse().map(function(post) {
             return (
-              <Post author={post.author} key={post._id} title={post.title} content={post.content}/>
+              <Post author={post.author} key={post._id} title={post.title} content={post.content} date={post.created_at}/>
             );
           });
           return (
