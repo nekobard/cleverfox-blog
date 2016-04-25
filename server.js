@@ -22,6 +22,10 @@ app.get('/', function (req, res) {
    res.render('index.html');
 });
 
+app.get('/details/:id', function (req, res) {
+   res.send('helo');
+});
+
 app.get('/api/posts', function(req, res){
   Post.find({}, function(err, posts) {
     if (err){

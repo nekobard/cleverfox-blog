@@ -72,7 +72,7 @@ article > div{
   height: 3rem;
 }
 
-article > div > button{
+article > div > a{
   line-height: 1.5rem;
   font-size: 1rem;
   background: white;
@@ -82,10 +82,12 @@ article > div > button{
   background: rgb(172, 172, 172);
   border-radius: 10px;
   position: absolute;
+  font-family: sans-serif;
+  text-decoration: none;
   right: 0;
 }
 
-article > div > button:hover{
+article > div > a:hover{
   background: rgb(152, 152, 152);
   cursor: pointer;
 }
