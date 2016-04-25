@@ -4,6 +4,7 @@ var config = require('./config.js');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 
+app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
