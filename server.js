@@ -28,7 +28,13 @@ app.get('/about', function (req, res) {
 });
 
 app.get('/details/:id', function (req, res) {
-   res.send('helo');
+  Post.find({ _id: req.params.id }, function(err, post) {
+    if (err){
+      console.log(err);
+    } else{
+      res.render('pages/details', { title : "Details", post : post[0]});
+    }
+  });
 });
 
 app.get('/api/posts', function(req, res){
