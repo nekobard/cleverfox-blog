@@ -20,7 +20,7 @@ mongoose.connect(config.dbname, function(err){
 var Post = require('./models/post');
 
 app.get('/', function (req, res) {
-   res.render('views/pages/index');
+   res.render('pages/index');
 });
 
 app.get('/details/:id', function (req, res) {
