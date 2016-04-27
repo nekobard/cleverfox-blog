@@ -24,7 +24,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/about', function (req, res) {
-   res.render('pages/about', { title : "I tell you a story..."});
+   res.render('pages/about', { title : "I'll tell you a story..."});
 });
 
 app.get('/details/:id', function (req, res) {
@@ -60,6 +60,7 @@ app.post('/api/posts', function(req, res){
       console.log(err);
     } else {
       console.log('Post created!');
+      res.send('Post created');
     }
 
   });

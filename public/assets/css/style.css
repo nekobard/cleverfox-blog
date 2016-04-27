@@ -1,3 +1,7 @@
+html {
+  overflow-y: scroll;
+}
+
 .menu > ul li{
   display: inline-block;
   list-style-type: none;
