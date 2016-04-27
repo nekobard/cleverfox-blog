@@ -66,6 +66,11 @@ app.post('/api/posts', function(req, res){
   });
 });
 
+app.get(config.adminRoute, function(req, res){
+  res.send("hello admin");
+});
+
+
 var server = app.listen(config.port, function () {
   var port = server.address().port;
   console.log("Example app listening at " + port + " port");
