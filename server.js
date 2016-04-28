@@ -67,7 +67,7 @@ app.post('/api/posts', function(req, res){
 });
 
 app.get(config.adminRoute, function(req, res){
-  res.send("hello admin");
+  res.render('pages/admin/index', { name: "NekoBard"});
 });
 
 

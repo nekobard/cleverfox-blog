@@ -2,6 +2,10 @@ html {
   overflow-y: scroll;
 }
 
+body{
+  margin: 0;
+}
+
 .menu > ul li{
   display: inline-block;
   list-style-type: none;
@@ -94,4 +98,62 @@ article > div > a{
 article > div > a:hover{
   background: rgb(152, 152, 152);
   cursor: pointer;
+}
+
+/* admin */
+
+.sidebar{
+  position: fixed;
+  width: 18rem;
+  height: 100%;
+  top: 0;
+  /* box-shadow: 10px 0 5px -2px #e3e3e3; */
+  border-right: 1px solid rgb(214, 214, 214);
+  font-family: sans-serif;
+  background: white;
+}
+
+.user-thumbnail{
+  margin-top:3rem;
+  text-align:center;
+}
+
+.user-image{
+  width: 6rem;
+  height: 6rem;
+  font-size: 3rem;
+  background: rgb(114, 200, 92);
+  line-height: 6rem;
+  color: white;
+  border-radius: 50%;
+  margin:0 auto;
+}
+
+.user-thumbnail > h2{
+  color: #333;
+  font-size: 1.5rem;
+  font-weight: lighter;
+  line-height: 3rem;
+}
+
+.sidebar > ul{
+  list-style: none;
+  margin-left: 0;
+  margin-right: 0;
+  margin-top: 4.5rem;
+  padding: 0;
+}
+
+.sidebar > ul > li{
+  line-height: 3rem;
+  font-size: 1.25rem;
+  font-weight: lighter;
+}
+
+.sidebar > ul > li > a{
+  text-decoration: none;
+  color: #333;
+  display:block;
+  text-transform: uppercase;
+  margin-left: 1.5rem;
 }
