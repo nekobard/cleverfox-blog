@@ -5,53 +5,17 @@
     <title>Admin panel</title>
     <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.0.1/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.0.1/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
   </head>
   <body>
 
     <div class="container-admin-posts">
-      <ul class="admin-posts">
-        <li>
-          <div class="column-admin">
-            <h3>Title</h3>
-          </div>
-          <div class="column-admin">
-            <h3>Content</h3>
-          </div>
-          <div class="column-admin">
-            <h3>Author</h3>
-          </div>
-          <div class="column-admin">
-            <h3>Date</h3>
-          </div>
-          <div class="column-admin">
 
-          </div>
-          <div class="column-admin">
+      <div id="posts-table"></div>
 
-          </div>
-        </li>
-        <hr class="table-separator">
-        <li>
-          <div class="column-admin">
-            <h4>Learn React</h4>
-          </div>
-          <div class="column-admin">
-            <h4>Lorem ipsum...</h4>
-          </div>
-          <div class="column-admin">
-            <h4>nekobard</h4>
-          </div>
-          <div class="column-admin">
-            <h4>2016-04-18</h4>
-          </div>
-          <div class="column-admin">
-            <button class="edit-button">Edit</button>
-          </div>
-          <div class="column-admin">
-            <button class="delete-button">Delete</button>
-          </div>
-        </li>
-      </ul>
     </div>
     <aside class="sidebar">
       <div class="user-thumbnail">
@@ -65,5 +29,106 @@
         <li><a href="#">Page settings</a></li>
       </ul>
     </aside>
+
+
+    <script type="text/babel">
+    var PostRow = React.createClass({
+      render: function() {
+        var date = this.props.date.toString().substring(0,10);
+        return (
+          <li>
+            <div className="column-admin">
+              <h4>{this.props.title}</h4>
+            </div>
+            <div className="column-admin">
+              <h4>{this.props.content}</h4>
+            </div>
+            <div className="column-admin">
+              <h4>{this.props.author}</h4>
+            </div>
+            <div className="column-admin">
+              <h4>{date}</h4>
+            </div>
+            <div className="column-admin">
+              <button className="edit-button">Edit</button>
+            </div>
+            <div className="column-admin">
+              <button className="delete-button">Delete</button>
+            </div>
+          </li>
+        );
+      }
+    });
+
+    var PostsTable = React.createClass({
+      getInitialState: function() {
+        return {data: []};
+      },
+      componentDidMount: function() {
+        $.ajax({
+          url: this.props.url,
+          dataType: 'json',
+          cache: false,
+          success: function(data) {
+            this.setState({data: data});
+          }.bind(this),
+          error: function(xhr, status, err) {
+            console.error(this.props.url, status, err.toString());
+          }.bind(this)
+        });
+      },
+      render: function() {
+        var posts = this.state.data.reverse().map(function(post) {
+          var longText = {
+            title : function(){
+              if(post.title.length > 10)
+                return post.title.substring(0,10) + " ...";
+              else
+                return post.title;
+            },
+            content : function(){
+              if(post.content.length > 10)
+                return post.content.substring(0,10) + " ...";
+              else
+                return post.content;
+            }
+          }
+          return (
+            <PostRow author={post.author} key={post._id} title={longText.title()} content={longText.content()} date={post.created_at}/>
+          );
+        });
+
+        return (
+          <ul className="admin-posts">
+            <li>
+              <div className="column-admin">
+                <h3>Title</h3>
+              </div>
+              <div className="column-admin">
+                <h3>Content</h3>
+              </div>
+              <div className="column-admin">
+                <h3>Author</h3>
+              </div>
+              <div className="column-admin">
+                <h3>Date</h3>
+              </div>
+              <div className="column-admin"></div>
+              <div className="column-admin"></div>
+            </li>
+            <hr className="table-separator"/>
+            {posts}
+          </ul>
+        );
+      }
+    });
+
+    ReactDOM.render(
+      <PostsTable url="/api/posts" />,
+      document.getElementById('posts-table')
+    );
+
+    </script>
+
   </body>
 </html>
