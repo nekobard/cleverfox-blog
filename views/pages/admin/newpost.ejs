@@ -14,8 +14,16 @@
 
     <div class="container-admin-posts">
       <h1 class="admin-page-title"><%= adminPageTitle %></h1>
-      <a href='<%= urls.newPost %>' class="new-post-button">New</a>
-      <div id="posts-table"></div>
+
+      <div class="new-post-container">
+        <label for="title" class="admin-form-label">Title</label>
+        <input type="text" id="title" class="admin-form-input-text">
+        <label for="content" class="admin-form-label">Content</label>
+        <textarea name="content" rows="10" cols="60" id="content" class="admin-form-input-text-area"></textarea>
+        <div class="button-right-container">
+          <button>Save</button>
+        </div>
+      </div>
 
     </div>
     <aside class="sidebar">
@@ -30,9 +38,6 @@
         <li><a href="#">Page settings</a></li>
       </ul>
     </aside>
-
-
-    <script type="text/babel" src="/assets/js/posts-table.js"></script>
 
   </body>
 </html>

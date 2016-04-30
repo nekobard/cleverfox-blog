@@ -66,9 +66,20 @@ app.post('/api/posts', function(req, res){
 });
 
 app.get(config.adminRoute, function(req, res){
-  res.render('pages/admin/index', { name: "NekoBard"});
+  var urls = {
+    posts: config.adminRoute,
+    newPost: config.adminRoute + "newpost"
+  }
+  res.render('pages/admin/index', { name: "NekoBard", adminPageTitle : "Posts", urls : urls});
 });
 
+app.get(config.adminRoute + "newpost", function(req, res){
+  var urls = {
+    posts: config.adminRoute,
+    newPost: config.adminRoute + "newpost"
+  }
+  res.render('pages/admin/newpost', { name: "NekoBard", adminPageTitle : "New post", urls : urls});
+});
 
 var server = app.listen(config.port, function () {
   var port = server.address().port;
