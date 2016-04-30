@@ -164,7 +164,7 @@ article > div > a:hover{
   margin-left: 0;
   margin-right: 0;
   padding: 0;
-  margin-top: 4.5rem;
+  margin-top: 1.5rem;
 }
 
 .column-admin{
@@ -221,6 +221,7 @@ article > div > a:hover{
   font-size: 1rem;
   width: 6rem;
   color: white;
+  font-family: sans-serif;
 }
 
 .delete-button{
@@ -231,4 +232,27 @@ article > div > a:hover{
   font-size: 1rem;
   width: 6rem;
   color: white;
+  font-family: sans-serif;
+}
+
+.admin-page-title{
+  color: #333;
+  font-family: sans-serif;
+  font-weight: lighter;
+  font-size: 3rem;
+}
+
+.new-post-button{
+  background: rgb(66, 148, 245);
+  border: none;
+  border-radius: 12px;
+  padding: 0.375rem;
+  font-size: 1rem;
+  width: 6rem;
+  display:block;
+  text-align: center;
+  color: white;
+  font-family: sans-serif;
+  text-decoration: none;
+  margin-top: 3rem;
 }
