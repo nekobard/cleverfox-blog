@@ -21,7 +21,7 @@
         <label for="content" class="admin-form-label">Content</label>
         <textarea name="content" rows="10" cols="60" id="content" class="admin-form-input-text-area"></textarea>
         <div class="button-right-container">
-          <button>Save</button>
+          <button id="save">Save</button>
         </div>
       </div>
 
@@ -39,5 +39,44 @@
       </ul>
     </aside>
 
+    <div class="alert-error" id="alert-error">
+      <div>
+        <ul>
+          <li><span>Title</span> can't be blank</li>
+          <li><span>Content</span> can't be blank</li>
+        </ul>
+        <button id="close-button">Ok</button>
+      </div>
+    </div>
+
+    <script>
+      var submit = document.getElementById('save');
+      var closeButton = document.getElementById('close-button');
+
+      submit.onclick = function(){
+        var title = document.getElementById('title');
+        var content = document.getElementById('content');
+
+        var errors = [];
+
+        if(title.value == undefined || title.value ===""){
+          errors.push("Title can't be blank");
+        }
+        if(content.value == undefined || content.value ===""){
+          errors.push("Content can't be blank");
+        }
+
+        if(errors.length > 0){
+          console.log(errors);
+          document.getElementById('alert-error').style.display = 'inline';
+
+        } else{
+
+        }
+      }
+      closeButton.onclick = function(){
+        document.getElementById('alert-error').style.display = 'none';
+      }
+    </script>
   </body>
 </html>
