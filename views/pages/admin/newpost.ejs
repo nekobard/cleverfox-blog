@@ -41,9 +41,9 @@
 
     <div class="alert-error" id="alert-error">
       <div>
-        <ul>
-          <li><span>Title</span> can't be blank</li>
-          <li><span>Content</span> can't be blank</li>
+        <ul id="error-list">
+          <!--<li><span>Title</span> can't be blank</li>
+          <li><span>Content</span> can't be blank</li>-->
         </ul>
         <button id="close-button">Ok</button>
       </div>
@@ -52,11 +52,13 @@
     <script>
       var submit = document.getElementById('save');
       var closeButton = document.getElementById('close-button');
+      var title = document.getElementById('title');
+      var content = document.getElementById('content');
+      var errorList = document.getElementById('error-list');
+
+      title.focus();
 
       submit.onclick = function(){
-        var title = document.getElementById('title');
-        var content = document.getElementById('content');
-
         var errors = [];
 
         if(title.value == undefined || title.value ===""){
@@ -67,8 +69,24 @@
         }
 
         if(errors.length > 0){
-          console.log(errors);
-          document.getElementById('alert-error').style.display = 'inline';
+
+          var errorAlert = document.getElementById('alert-error');
+
+          while (errorList.hasChildNodes()) {
+              errorList.removeChild(errorList.lastChild);
+          }
+
+          errorAlert.style.display = 'inline';
+
+          errors.forEach(function(errorObject){
+            var error = document.createElement("LI");
+            var errorDecorator = document.createElement("SPAN");
+            var textSpan = document.createTextNode(errorObject.substr(0,errorObject.indexOf(' ')));
+            errorDecorator.appendChild(textSpan);
+            error.appendChild(errorDecorator);
+            error.appendChild(document.createTextNode(" " + errorObject.substr(errorObject.indexOf(' ')+1)));
+            errorList.appendChild(error);
+          });
 
         } else{
 
