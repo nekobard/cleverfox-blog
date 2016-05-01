@@ -90,6 +90,24 @@
 
         } else{
 
+          $.ajax({
+            type: "POST",
+            url: '/api/posts',
+            data: {
+              author: "nekobard",
+              title: title.value,
+              content: content.value
+            },
+            success: function(data){
+              if(typeof data.redirect == 'string')
+                window.location = data.redirect
+            },
+            dataType: 'json',
+            error: function(err) {
+              console.log("Error");
+            }
+          });
+
         }
       }
       closeButton.onclick = function(){

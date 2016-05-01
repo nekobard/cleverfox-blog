@@ -326,7 +326,10 @@ article > div > a:hover{
   color: white;
   font-family: sans-serif;
   cursor: pointer;
+}
 
+.button-right-container > button:hover{
+  background: rgb(82, 207, 50);
 }
 
 .alert-error{

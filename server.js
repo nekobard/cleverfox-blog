@@ -59,7 +59,7 @@ app.post('/api/posts', function(req, res){
       console.log(err);
     } else {
       console.log('Post created!');
-      res.send('Post created');
+      res.send({redirect: config.adminRoute})
     }
 
   });
