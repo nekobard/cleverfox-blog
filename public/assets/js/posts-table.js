@@ -1,3 +1,11 @@
+var PostDeleteButton = React.createClass({
+  render: function(){
+    return(
+      <button className="delete-button">Delete</button>
+    );
+  }
+});
+
 var PostRow = React.createClass({
   render: function() {
     var date = this.props.date.toString().substring(0,10);
@@ -19,7 +27,7 @@ var PostRow = React.createClass({
           <button className="edit-button">Edit</button>
         </div>
         <div className="column-admin">
-          <button className="delete-button">Delete</button>
+          <PostDeleteButton id={this.props.id}/>
         </div>
       </li>
     );
@@ -60,7 +68,7 @@ var PostsTable = React.createClass({
         }
       }
       return (
-        <PostRow author={post.author} key={post._id} title={longText.title()} content={longText.content()} date={post.created_at}/>
+        <PostRow author={post.author} key={post._id} id={post._id} title={longText.title()} content={longText.content()} date={post.created_at}/>
       );
     });
 
