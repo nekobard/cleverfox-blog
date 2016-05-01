@@ -223,6 +223,8 @@ article > div > a:hover{
   color: white;
   font-family: sans-serif;
   cursor: pointer;
+  text-decoration:none;
+
 }
 
 .edit-button:hover{
@@ -239,6 +241,7 @@ article > div > a:hover{
   color: white;
   font-family: sans-serif;
   cursor: pointer;
+
 }
 
 .delete-button:hover{
@@ -399,4 +402,22 @@ article > div > a:hover{
 
 .alert-error > div > button:hover{
   background: rgb(62, 138, 228);
+}
+
+.example-enter {
+  opacity: 0.01;
+}
+
+.example-enter.example-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.example-leave {
+  opacity: 1;
+}
+
+.example-leave.example-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
 }

@@ -49,6 +49,37 @@ app.get('/api/posts', function(req, res){
   });
 });
 
+app.delete('/api/posts/:id', function(req, res) {
+    Post.remove({
+        _id : req.params.id
+    }, function(err, post) {
+        if (err)
+            res.send(err);
+
+        Post.find(function(err, posts) {
+            if (err)
+                res.send(err)
+            res.json(posts);
+        });
+    });
+});
+
+app.put('/api/posts/:id',function(req, res) {
+  Post.findById(req.params.id, function(err, post) {
+      if (err)
+          res.send(err);
+
+      post.title = req.body.title;
+      post.content = req.body.content;
+      post.save(function(err) {
+        if (err)
+            res.send(err);
+        res.send({redirect: config.adminRoute})
+      });
+
+  });
+});
+
 app.post('/api/posts', function(req, res){
   var newPost = Post({
     author: req.body.author,
@@ -81,6 +112,22 @@ app.get(config.adminRoute + "newpost", function(req, res){
     newPost: config.adminRoute + "newpost"
   }
   res.render('pages/admin/newpost', { name: "NekoBard", adminPageTitle : "New post", urls : urls});
+});
+
+app.get(config.adminRoute + "editpost/:id", function(req, res){
+
+  Post.find({ _id: req.params.id }, function(err, post) {
+    if (err){
+      console.log(err);
+    } else{
+      var urls = {
+        posts: config.adminRoute,
+        newPost: config.adminRoute + "newpost"
+      }
+
+      res.render('pages/admin/editpost', { name: "NekoBard", adminPageTitle : "Edit post", urls : urls, id : req.params.id, post : post[0]});
+    }
+  });
 });
 
 var server = app.listen(config.port, function () {

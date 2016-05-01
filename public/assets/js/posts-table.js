@@ -1,7 +1,31 @@
 var PostDeleteButton = React.createClass({
+  handleClick: function(event) {
+    this.props.refresh(this.props.id);
+    $.ajax({
+        url: '/api/posts/' + this.props.id,
+        type: 'DELETE',
+        success: function(data) {}
+    });
+  },
   render: function(){
     return(
-      <button className="delete-button">Delete</button>
+      <button className="delete-button" onClick={this.handleClick}>Delete</button>
+    );
+  }
+});
+
+var PostEditButton = React.createClass({
+  handleClick: function(event) {
+    var s = window.location.toString();
+    if(s.slice(-1) !== '/'){
+      window.location = window.location + "/editpost/" + this.props.id;
+    } else {
+      window.location = window.location + "editpost/" + this.props.id;
+    }
+  },
+  render: function(){
+    return(
+      <button className="edit-button" onClick={this.handleClick}>Edit</button>
     );
   }
 });
@@ -24,10 +48,11 @@ var PostRow = React.createClass({
           <h4>{date}</h4>
         </div>
         <div className="column-admin">
-          <button className="edit-button">Edit</button>
+
+          <PostEditButton id={this.props.id}/>
         </div>
         <div className="column-admin">
-          <PostDeleteButton id={this.props.id}/>
+          <PostDeleteButton id={this.props.id} refresh={this.props.refresh}/>
         </div>
       </li>
     );
@@ -54,7 +79,14 @@ var PostsTable = React.createClass({
   componentDidMount: function() {
     this.loadPostsFromServer();
   },
+  refreshTable: function(id){
+    var result = $.grep(this.state.data, function(e, i){
+      return e._id !== id;
+    });
+    this.setState({ data: result.reverse() });
+  },
   render: function() {
+    var postTable = this;
     var posts = this.state.data.reverse().map(function(post) {
       var longText = {
         title : function(){
@@ -71,7 +103,7 @@ var PostsTable = React.createClass({
         }
       }
       return (
-        <PostRow author={post.author} key={post._id} id={post._id} title={longText.title()} content={longText.content()} date={post.created_at}/>
+        <PostRow author={post.author} key={post._id} id={post._id} title={longText.title()} content={longText.content()} date={post.created_at} refresh={postTable.refreshTable}/>
       );
     });
 
@@ -94,7 +126,9 @@ var PostsTable = React.createClass({
           <div className="column-admin"></div>
         </li>
         <hr className="table-separator"/>
+
         {posts}
+
       </ul>
     );
   }

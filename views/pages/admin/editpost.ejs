@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Admin panel</title>
+    <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.0.1/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.0.1/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+  </head>
+  <body>
+
+    <div class="container-admin-posts">
+      <h1 class="admin-page-title"><%= adminPageTitle %></h1>
+
+      <div class="new-post-container">
+        <label for="title" class="admin-form-label">Title</label>
+        <input type="text" id="title" class="admin-form-input-text" value='<%= post.title %>'>
+        <label for="content" class="admin-form-label">Content</label>
+        <textarea name="content" rows="10" cols="60" id="content" class="admin-form-input-text-area"> <%= post.content %></textarea>
+        <div class="button-right-container">
+          <button id="save" key='<%= id %>'>Save</button>
+        </div>
+      </div>
+
+    </div>
+    <aside class="sidebar">
+      <div class="user-thumbnail">
+        <div class="user-image">N</div>
+        <h2>Hello nekobard</h2>
+      </div>
+      <ul>
+        <li><a href='<%= urls.posts %>'>Posts</a></li>
+        <li><a href="#">Accounts</a></li>
+        <li><a href="#">About us</a></li>
+        <li><a href="#">Page settings</a></li>
+      </ul>
+    </aside>
+
+    <div class="alert-error" id="alert-error">
+      <div>
+        <ul id="error-list">
+          <!--<li><span>Title</span> can't be blank</li>
+          <li><span>Content</span> can't be blank</li>-->
+        </ul>
+        <button id="close-button">Ok</button>
+      </div>
+    </div>
+
+    <script>
+      var submit = document.getElementById('save');
+      var closeButton = document.getElementById('close-button');
+      var title = document.getElementById('title');
+      var content = document.getElementById('content');
+      var errorList = document.getElementById('error-list');
+
+      title.focus();
+
+      submit.onclick = function(){
+        var errors = [];
+
+        if(title.value == undefined || title.value ===""){
+          errors.push("Title can't be blank");
+        }
+        if(content.value == undefined || content.value ===""){
+          errors.push("Content can't be blank");
+        }
+
+        if(errors.length > 0){
+
+          var errorAlert = document.getElementById('alert-error');
+
+          while (errorList.hasChildNodes()) {
+              errorList.removeChild(errorList.lastChild);
+          }
+
+          errorAlert.style.display = 'inline';
+
+          errors.forEach(function(errorObject){
+            var error = document.createElement("LI");
+            var errorDecorator = document.createElement("SPAN");
+            var textSpan = document.createTextNode(errorObject.substr(0,errorObject.indexOf(' ')));
+            errorDecorator.appendChild(textSpan);
+            error.appendChild(errorDecorator);
+            error.appendChild(document.createTextNode(" " + errorObject.substr(errorObject.indexOf(' ')+1)));
+            errorList.appendChild(error);
+          });
+
+        } else{
+
+          $.ajax({
+            type: "PUT",
+            url: '/api/posts/' + submit.getAttribute('key'),
+            data: {
+              author: "nekobard",
+              title: title.value,
+              content: content.value
+            },
+            success: function(data){
+              if(typeof data.redirect == 'string')
+                window.location = data.redirect
+            },
+            dataType: 'json',
+            error: function(err) {
+              console.log("Error");
+            }
+          });
+
+        }
+      }
+      closeButton.onclick = function(){
+        document.getElementById('alert-error').style.display = 'none';
+      }
+    </script>
+  </body>
+</html>
