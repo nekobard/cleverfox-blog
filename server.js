@@ -3,11 +3,13 @@ var app = express();
 var config = require('./config.js');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var methodOverride = require('method-override');
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(methodOverride());
 
 mongoose.connect(config.dbname, function(err){
   if(err){
