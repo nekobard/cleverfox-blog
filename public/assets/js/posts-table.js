@@ -38,7 +38,7 @@ var PostsTable = React.createClass({
   getInitialState: function() {
     return {data: []};
   },
-  componentDidMount: function() {
+  loadPostsFromServer: function() {
     $.ajax({
       url: this.props.url,
       dataType: 'json',
@@ -50,6 +50,9 @@ var PostsTable = React.createClass({
         console.error(this.props.url, status, err.toString());
       }.bind(this)
     });
+  },
+  componentDidMount: function() {
+    this.loadPostsFromServer();
   },
   render: function() {
     var posts = this.state.data.reverse().map(function(post) {
