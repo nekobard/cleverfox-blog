@@ -4,6 +4,7 @@ var config = require('./config.js');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
+var passwordHash = require('password-hash');
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
@@ -100,6 +101,9 @@ app.post('/api/posts', function(req, res){
 });
 
 app.post('/api/users', function(req, res){
+
+
+
   var newUser = User({
     username: req.body.username,
     password: req.body.password,
