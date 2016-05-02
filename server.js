@@ -4,7 +4,11 @@ var config = require('./config.js');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
-var passwordHash = require('password-hash');
+var bcrypt = require('bcrypt');
+
+const saltRounds = 10;
+
+
 
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
@@ -101,23 +105,23 @@ app.post('/api/posts', function(req, res){
 });
 
 app.post('/api/users', function(req, res){
+  bcrypt.hash(req.body.password, saltRounds, function(err, hash) {
+    var newUser = User({
+      username: req.body.username,
+      password: hash,
+      accountType: req.body.accountType
+    });
 
+    newUser.save(function(err) {
+      if (err){
+        console.log(err);
+        res.send(err);
+      } else {
+        console.log('User created!');
+        res.send({message: 'ok'});
+      }
 
-
-  var newUser = User({
-    username: req.body.username,
-    password: req.body.password,
-    accountType: req.body.accountType
-  });
-
-  newUser.save(function(err) {
-    if (err){
-      console.log(err);
-    } else {
-      console.log('Post created!');
-      res.send({message: 'ok'});
-    }
-
+    });
   });
 });
 
