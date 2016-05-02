@@ -20,6 +20,7 @@ mongoose.connect(config.dbname, function(err){
 });
 
 var Post = require('./models/post');
+var User = require('./models/user');
 
 app.get('/', function (req, res) {
    res.render('pages/index', { title : "Sweet home"});
@@ -97,6 +98,26 @@ app.post('/api/posts', function(req, res){
 
   });
 });
+
+app.post('/api/users', function(req, res){
+  var newUser = User({
+    username: req.body.username,
+    password: req.body.password,
+    accountType: req.body.accountType
+  });
+
+  newUser.save(function(err) {
+    if (err){
+      console.log(err);
+    } else {
+      console.log('Post created!');
+      res.send({message: 'ok'});
+    }
+
+  });
+});
+
+
 
 app.get(config.adminRoute, function(req, res){
   var urls = {
