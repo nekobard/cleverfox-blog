@@ -159,6 +159,14 @@ app.get(config.adminRoute + "editpost/:id", function(req, res){
   });
 });
 
+app.get(config.adminRoute + "login", function(req, res){
+  res.render('pages/admin/login');
+});
+
+app.post(config.adminRoute + "login", function(req, res){
+  
+});
+
 var server = app.listen(config.port, function () {
   var port = server.address().port;
   console.log("Example app listening at " + port + " port");
