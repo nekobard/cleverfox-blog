@@ -15,6 +15,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride());
+app.set('superSecret', config.secret);
 
 mongoose.connect(config.dbname, function(err){
   if(err){
@@ -164,7 +165,31 @@ app.get(config.adminRoute + "login", function(req, res){
 });
 
 app.post(config.adminRoute + "login", function(req, res){
-  
+
+  User.findOne({
+      username: req.body.username
+    },
+    function(err, user) {
+      if (err) throw err;
+
+      if (!user) {
+        res.json({ success: false, message: 'Authentication failed. User not found.' });
+      } else if (user) {
+        if (!bcrypt.compareSync(req.body.password, user.password)) {
+          res.json({ success: false, message: 'Authentication failed. Wrong password.' });
+        } else {
+            var token = jwt.sign(user, app.get('superSecret'), {
+              expiresInMinutes: 1440
+            });
+
+            res.json({
+              success: true,
+              message: 'Enjoy your token!',
+              token: token
+            });
+          }
+      }
+  });
 });
 
 var server = app.listen(config.port, function () {
