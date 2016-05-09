@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var bcrypt = require('bcrypt');
-
+var jwt = require('jsonwebtoken');
 const saltRounds = 10;
 
 
@@ -170,16 +170,20 @@ app.post(config.adminRoute + "login", function(req, res){
       username: req.body.username
     },
     function(err, user) {
-      if (err) throw err;
-
+      if (err) {
+        console.log(err);
+      }
       if (!user) {
         res.json({ success: false, message: 'Authentication failed. User not found.' });
       } else if (user) {
         if (!bcrypt.compareSync(req.body.password, user.password)) {
           res.json({ success: false, message: 'Authentication failed. Wrong password.' });
         } else {
-            var token = jwt.sign(user, app.get('superSecret'), {
-              expiresInMinutes: 1440
+            var userInfo = {};
+            userInfo.username = user.username;
+            userInfo.accountType = user.accountType;
+            var token = jwt.sign(userInfo, app.get('superSecret'), {
+              expiresIn: 60
             });
 
             res.json({
