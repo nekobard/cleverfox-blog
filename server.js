@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var methodOverride = require('method-override');
 var bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
+var cookieParser = require('cookie-parser')
 const saltRounds = 10;
 
 

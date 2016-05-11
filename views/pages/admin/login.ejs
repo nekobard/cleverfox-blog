@@ -39,7 +39,7 @@
           })
               .done(function(data) {
                   console.log(data);
-                  window.localStorage.setItem('token', data.token);
+                  
                   $(location).attr('href', data.redirect)
               });
 
