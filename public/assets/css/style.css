@@ -446,7 +446,7 @@ article > div > a:hover{
 
 .admin-login-input-text{
   display: block;
-  margin-top:1.5rem;
+  margin-top:1rem;
   border: 1px solid rgb(185, 185, 185);
   border-radius: 0.75rem;
   line-height: 1.5rem;

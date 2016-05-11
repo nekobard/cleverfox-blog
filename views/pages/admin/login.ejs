@@ -13,7 +13,7 @@
         <i class="fa fa-user" aria-hidden="true"></i>
 
       </div>
-      <form action="" method="post">
+      <form action="<%= url %>" method="post">
        <label for="username" class="admin-form-label">Username</label>
        <input type="text" name="username" placeholder="username" class="admin-login-input-text"><br>
        <label for="password" class="admin-form-label">Password</label>
@@ -21,5 +21,32 @@
        <input type="submit" value="Sign in" class="login-button">
       </form>
     </div>
+    <script>
+    $(document).ready(function() {
+
+      $('form').submit(function(event) {
+
+          var formData = {
+            'username' : $('input[name=username]').val(),
+            'password' : $('input[name=password]').val()
+          };
+
+          $.ajax({
+              type : 'POST',
+              url : $('form').attr('action'),
+              data : formData,
+              dataType : 'json'
+          })
+              .done(function(data) {
+                  console.log(data);
+                  window.localStorage.setItem('token', data.token);
+                  $(location).attr('href', data.redirect)
+              });
+
+          event.preventDefault();
+      });
+
+    });
+    </script>
   </body>
 </html>
